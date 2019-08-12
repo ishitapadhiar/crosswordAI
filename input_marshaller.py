@@ -1,5 +1,6 @@
 import os
 import os.path
+import sys
 
 def marshall(dir, out):
     """Reads the files in the given directory and writes a TSV containing (clue\tlen\tsoln)."""
@@ -14,3 +15,6 @@ def marshall(dir, out):
                         an = clue[1].strip()
                         outfile.write('{clue}\t{len}\t{ans}\n'
                             .format(clue=cl, len=len(an), ans=an))
+
+if __name__ == '__main__':
+    marshall(sys.argv[1], sys.argv[2])
