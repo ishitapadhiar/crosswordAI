@@ -3,11 +3,21 @@ from glove import Corpus, Glove
 import glove.corpus
 
 def tsvToLst(file):
-	
+	f = open(file,'r')
+	midLst = f.readlines()
+	f.close()
 
+
+	clu = list()
+	ans = list()
+	length = list()
+	for i in range(len(midLst)):
+		tempLst = midLst[i].split('\t')
+		clu.append(tempLst[0])
+		ans.append(tempLst[1])
+		length.append(tempLst[2])
 
 	return clu, ans, length 
-
 
 
 
