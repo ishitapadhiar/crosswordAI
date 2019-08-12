@@ -4,7 +4,7 @@ def marshall(infile):
     ls = []
     with open(infile, 'r') as data:
         for line in data:
-            clue = line.split(':')
+            clue = line.split(' : ')
             if len(clue) == 2:
                 ls.append((clue[0].strip(), clue[1].strip()))
     return ls
