@@ -1,12 +1,12 @@
 import tensorflow as tf
 from glove import Corpus, Glove
 import glove.corpus
+import sys
 
 def tsvToLst(file):
 	f = open(file,'r')
 	midLst = f.readlines()
 	f.close()
-
 
 	clu = list()
 	ans = list()
@@ -14,16 +14,36 @@ def tsvToLst(file):
 	for i in range(len(midLst)):
 		tempLst = midLst[i].split('\t')
 		clu.append(tempLst[0])
-		ans.append(tempLst[1])
-		length.append(tempLst[2])
+		length.append(tempLst[1])
+		ans.append(tempLst[2])
 
 	return clu, ans, length 
 
+def txtToLst(file):
+	f = open(file,'r')
+	midLst = f.readlines()
+	i = 0
+	while i < len(midLst):
+		midLst[i] = midLst[i].strip()
+		if len(midLst[i]) == 0:
+			midLst.pop(i)
+		i +=1
+
+	f.close()
+
+	finLst = list()
+	for i in range(len(midLst)):
+		finLst.append(midLst[i].split())
+
+	return finLst
 
 
 
+clueLst = txtToLst(sys.argv[1])
+print(len(clueLst))
+ansLst = txtToLst(sys.argv[2])
+print(len(ansLst))
 
-clues, answers, length = tsvToLst(sys.argv[1])
 corpus = Corpus()
 corpus.fit(clueLst, window = 10)
 glove = Glove(no_components = 5, learning_rate = 0.05)
@@ -41,4 +61,4 @@ glove1.fit(corpus1.matrix, epochs = 30, no_threads = 4, verbose = True)
 glove1.add_dictionary(corpus1.dictionary)
 glove1.save('answer.model')
 
-print (glove1.word_vectors[glove1.dictionary['era']])
+print (glove1.word_vectors[glove1.dictionary['ERA']])
