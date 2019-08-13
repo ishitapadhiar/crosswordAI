@@ -1,6 +1,7 @@
 # Script takes in a list of crossword clues, and for each clue
 # returns a list of important words from within the clue, as well as
 # words returned from WordNetLemmatizer
+import string
 
 import nltk, re, pprint
 from nltk.corpus import stopwords, wordnet
@@ -12,7 +13,7 @@ lemmatizer = WordNetLemmatizer()
 
 
 def tsv_to_list(clue_file):
-    f = open(clue_file, 'r')
+    f = open(clue_file, 'r', encoding="utf-8")
     lst = f.readlines()
     f.close()
 
@@ -39,10 +40,12 @@ def get_wordnet_pos(word):
     return tag_dict.get(tag, wordnet.NOUN)
 
 
-file = open("keywords.txt", 'w')
+file = open("keywords.txt", 'w', encoding='utf-8')
 
 for clue in tsv_to_list("allClues.tsv"):
     keywords = set([])
+    exclude = set(string.punctuation)
+    clue = ''.join(ch for ch in clue if ch not in exclude)
     clue = word_tokenize(clue.lower())
     filtered_clue = [w for w in clue if w not in stop_words]
 
