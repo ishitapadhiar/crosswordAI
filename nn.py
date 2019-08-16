@@ -13,6 +13,7 @@ if __name__ == '__main__':
 	model = keras.Sequential([
 		keras.layers.Dense(10, input_shape=(5,)),
 		keras.layers.Dense(10, activation=tf.nn.relu),
+		keras.layers.Dense(10, activation=tf.nn.relu),
 		keras.layers.Dense(5, activation=tf.nn.softmax)
 	])
 	model.compile(
